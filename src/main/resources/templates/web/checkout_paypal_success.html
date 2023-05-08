@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nông sản 24h - Sự lựa chọn tin cậy</title>
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+          integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link href="/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+    <link href="/css/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+    <!-- Product view slider -->
+    <link rel="stylesheet" type="text/css" href="/css/jquery.simpleLens.css">
+    <!-- slick slider -->
+    <link rel="stylesheet" type="text/css" href="/css/slick.css">
+    <!-- price picker slider -->
+    <link rel="stylesheet" type="text/css" href="/css/nouislider.css">
+    <!-- Theme color -->
+    <link id="switcher" href="/css/theme-color/default-theme.css" rel="stylesheet">
+
+    <!-- Top Slider CSS -->
+    <link href="/css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
+
+    <!-- Main style sheet -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Start header section -->
+<header th:replace="~{/web/header/mainHeader :: mainHeader}"></header>
+<!-- / header section -->
+
+<section class="inner-section checkout-part">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="account-card">
+              <div class="text-center">
+					<h3 style="color: #119744" class="mt-5">GIAO DỊCH THANH TOÁN ĐƠN HÀNG QUA PAYPAL THÀNH CÔNG!</h3>
+					<br>
+					<h4>Chúc mừng bạn <span style="text-decoration: underline; color: #119744">[[${user.name}]]</span> đã đặt hàng, thanh toán thành công!</h4>
+					<h5><em>Chúng tôi sẽ sớm giao đơn hàng cho bạn, cảm ơn!</em></h5>
+					<h5><em>Thank you for your purchase, thank you!</em></h5>
+					<hr>
+					<a th:href="@{/}" style="text-decoration: underline; color: #119744"><em>Click tại đây để tiếp tục mua sắm!</em></a>
+				</div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+<footer th:replace="~{/web/footer/footer :: footer}"></footer>
+    <!--End of Tawk.to Script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.js"></script>
+    <!-- SmartMenus jQuery plugin -->
+    <!-- SmartMenus jQuery Bootstrap Addon -->
+
+    <!-- To Slider JS -->
+    <script src="/js/sequence.js"></script>
+    <script src="/js/sequence-theme.modern-slide-in.js"></script>
+    <!-- Product view slider -->
+    <script type="text/javascript" src="/js/jquery.simpleGallery.js"></script>
+    <script type="text/javascript" src="/js/jquery.simpleLens.js"></script>
+    <!-- slick slider -->
+    <script type="text/javascript" src="/js/slick.js"></script>
+    <!-- Price picker slider -->
+    <script type="text/javascript" src="/js/nouislider.js"></script>
+    <script type="text/javascript" src="/js/validate.js"></script>
+    <!-- Custom js -->
+    <script type="text/javascript" src="/js/custom.js"></script>
+    </body>
+    </html>

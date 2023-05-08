@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Admin web nông sản</title>
+
+    <link href="/assets/css/pace.min.css" rel="stylesheet" />
+    <script src="/assets/js/pace.min.js"></script>
+    <link rel="stylesheet" href="/assets/plugins/summernote/dist/summernote-bs4.css"/>
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link href="/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/sidebar-menu.css" rel="stylesheet" />
+    <link href="/assets/css/app-style.css" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="~{/admin/header/header :: header}"></header>
+
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <div class="row mt-3">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">Thêm sản phẩm</div>
+                <hr>
+                  <form th:action="@{/admin/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+                      <div class="row">
+                          <div class="col-sm-12">
+                              <div class="form-group form-group-default">
+                                  <label>Tên sản phẩm</label>
+                                  <input th:field="*{productName}" id="productName" type="text" class="form-control" placeholder="Tên sản phẩm...">
+                              </div>
+                          </div>
+                          <div class="col-md-6 pr-0">
+                              <div class="form-group form-group-default">
+                                  <label>Thể loại</label>
+                                  <select class="form-control"
+                                          name="category" th:field="*{category.categoryId}" id="categoryId">
+                                      <option th:each="item : ${categoryList}"
+                                              th:value="${item.categoryId}" th:text="${item.categoryName}"
+                                              th:selected="${item.categoryId == product.category.categoryId}">
+                                          Category Name
+                                      </option>
+                                  </select>
+                              </div>
+                          </div>
+
+                          <div class="col-md-6 pr-0">
+                              <div class="form-group form-group-default">
+                                  <label>Đơn giá</label>
+                                  <input th:field="*{price}" id="price" min = 0 type="number" class="form-control" placeholder="Đơn giá">
+                              </div>
+                          </div>
+                          <div class="col-md-6 pr-0">
+                              <div class="form-group form-group-default">
+                                  <label>Số lượng</label>
+                                  <input th:field="*{quantity}" id="quantity" min = 0 type="number" class="form-control" placeholder="Số lượng">
+                              </div>
+                          </div>
+                          <div class="col-md-6 pr-0">
+                              <div class="form-group form-group-default">
+                                  <label>Giảm giá</label>
+                                  <input th:field="*{discount}" id="discount" min = 0 type="number" class="form-control" placeholder="Giảm giá">
+                              </div>
+                          </div>
+                          <div class="col-md-6 pr-0">
+                              <div class="form-group form-group-default">
+                                  <label>Ngày thêm</label>
+                                  <input th:field="*{enteredDate}" id="enteredDate" type="date" class="form-control" placeholder="Ngày thêm">
+                              </div>
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="form-group form-group-default">
+                                  <label>Images</label>
+                                  <input type="file" id="productImage" name="file" class="form-control">
+                              </div>
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="form-group form-group-default">
+                                  <label>Mô tả sản phẩm</label>
+                                  <textarea th:field="*{description}" id="description" class="form-control" placeholder="Mô tả sản phẩm"></textarea>
+                              </div>
+                          </div>
+                      </div>
+               <div class="form-footer">
+                    <button class="btn btn-danger"><i class="fa fa-times"></i><a th:href="@{/admin/products}">Hủy</a></button>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Thêm</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="overlay toggle-menu"></div>
+      </div>
+    </div>
+<script>
+		var date = new Date();
+		
+		var day = date.getDate();
+		var month = date.getMonth() + 1;
+		var year = date.getFullYear();
+		
+		if (month < 10) month = "0" + month;
+		if (day < 10) day = "0" + day;
+		
+		var today = year + "-" + month + "-" + day;
+		
+		
+		document.getElementById('the-date').value = today;
+</script>
+<footer th:replace="~{/admin/footer/footer :: footer}"></footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/plugins/simplebar/js/simplebar.js"></script>
+<script src="/assets/js/sidebar-menu.js"></script>
+<script src="/assets/js/jquery.loading-indicator.js"></script>
+<script src="/assets/js/app-script.js"></script>
+<script src="/assets/plugins/Chart.js/Chart.min.js"></script>
+<script src="/assets/js/index.js"></script>
+<script src="/assets/plugins/summernote/dist/summernote-bs4.min.js"></script>
+</body>
+
+</html>

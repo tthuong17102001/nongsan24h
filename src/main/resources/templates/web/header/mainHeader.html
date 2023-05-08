@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head></head>
+    <body>
+        <th:block th:fragment= "mainHeader">
+          <header id="aa-header">
+            <header th:replace="~{/web/header/topHeader :: topHeader}"></header>
+          <!-- start header bottom  -->
+            <header th:replace="~{/web/header/bottomHeader :: bottomHeader}"></header>
+          <!-- / header bottom  -->
+          </header>
+          
+        <!-- menu -->
+          <header th:replace="~{/web/header/menu :: menu}"></header>
+        <!-- / menu -->
+        
+          
+        <!-- wpf loader Two -->
+          <div id="wpf-loader-two">          
+            <div class="wpf-loader-two-inner">
+              <span>Loading...</span>
+            </div>
+          </div> 
+          <!-- / wpf loader Two -->       
+        <!-- SCROLL TOP BUTTON -->
+          <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+        <!-- END SCROLL TOP BUTTON -->
+        </th:block>
+    </body>
+</html>

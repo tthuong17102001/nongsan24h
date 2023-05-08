@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nông sản 24h - Sự lựa chọn tin cậy</title>
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+          integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link href="/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+    <link href="/css/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+    <!-- Product view slider -->
+    <link rel="stylesheet" type="text/css" href="/css/jquery.simpleLens.css">
+    <!-- slick slider -->
+    <link rel="stylesheet" type="text/css" href="/css/slick.css">
+    <!-- price picker slider -->
+    <link rel="stylesheet" type="text/css" href="/css/nouislider.css">
+    <!-- Theme color -->
+    <link id="switcher" href="/css/theme-color/default-theme.css" rel="stylesheet">
+
+    <!-- Top Slider CSS -->
+    <link href="/css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
+
+    <!-- Main style sheet -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Start header section -->
+<header th:replace="~{/web/header/mainHeader :: mainHeader}"></header>
+<!-- / header section -->
+
+
+<!--  content -->
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="/images/banner-product.png" alt="banner sản phẩm">
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Sản phẩm</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/">Trang chủ</a></li>
+                    <li style="color:#fff">Danh sách yêu thích</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="cart-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div th:unless="${totalSave!=0}" class="text-center" style="margin: 120px 0px">
+                    <h3 style="color: #754110" class="mt-5">Hiện tại bạn chưa có sản phẩm yêu thích nào!</h3>
+                    <h4 style="color: #754110">Hãy mua sắm đi nào!</h4>
+                    <a th:href="@{/products}" style="text-decoration: underline;">Click tại đây!</a>
+                </div>
+                <div th:if="${totalSave!=0}">
+                <div class="cart-view-area">
+                    <div class="cart-view-table">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Tên</th>
+                                        <th scope="col">Đơn giá</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Thêm giỏ hàng</th>
+                                        <th scope="col">Hành động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="item,iState : ${favorites}">
+                                        <td>[[${iState.index + 1}]]</td>
+                                        <td>
+                                            <img th:src="@{'/loadImage?imageName='+${item.product.productImage}}" alt="product" />
+                                        </td>
+                                        <td>[[${item.product.productName}]]</td>
+                                        <td>
+                                            [[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small>
+                                        </td>
+                                        <td style="color: #754110">[[${item.product.quantity>0}?'Sản phẩm đang còn' : 'Đã hết hàng']] </td>
+                                        <td class="table-shop">
+                                            <a class="product-add" title="Thêm giỏ hàng" th:href="@{/addToCart(productId=${item.product.productId})}">
+                                                Thêm giỏ hàng
+                                            </a>
+
+                                        </td>
+                                        <td class="table-action">
+                                            <a style="margin-right: 16px" class="view" th:href="@{/productDetail(id=${item.product.productId})}" title="Chi tiết sản phẩm">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+
+                                            <a class="trash" th:href="@{/doUnFavorite(id=${item.product.productId})}" title="Xóa yêu thích">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{/web/footer/footer :: footer}"></footer>
+<!-- end footer-->
+<!-- jQuery library -->
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/5eedbd889e5f69442290f4d1/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/js/bootstrap.js"></script>
+<!-- SmartMenus jQuery plugin -->
+<!-- SmartMenus jQuery Bootstrap Addon -->
+
+<!-- To Slider JS -->
+<script src="/js/sequence.js"></script>
+<script src="/js/sequence-theme.modern-slide-in.js"></script>
+<!-- Product view slider -->
+<script type="text/javascript" src="/js/jquery.simpleGallery.js"></script>
+<script type="text/javascript" src="/js/jquery.simpleLens.js"></script>
+<!-- slick slider -->
+<script type="text/javascript" src="/js/slick.js"></script>
+<!-- Price picker slider -->
+<script type="text/javascript" src="/js/nouislider.js"></script>
+<script type="text/javascript" src="/js/validate.js"></script>
+<!-- Custom js -->
+<script type="text/javascript" src="/js/custom.js"></script>
+</body>
+</html>

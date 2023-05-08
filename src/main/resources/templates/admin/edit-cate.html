@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Admin web nông sản</title>
+
+	<link href="/assets/css/pace.min.css" rel="stylesheet" />
+	<script src="/assets/js/pace.min.js"></script>
+	<link rel="stylesheet" href="/assets/plugins/summernote/dist/summernote-bs4.css"/>
+	<link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+	<link href="/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+	<link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+	<link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/assets/css/animate.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/css/sidebar-menu.css" rel="stylesheet" />
+	<link href="/assets/css/app-style.css" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="~{/admin/header/header :: header}"></header>
+    <div class="content-wrapper">
+      <div class="container-fluid">
+
+        <div class="row mt-3">
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">Sửa danh mục</div>
+                <hr>
+          	
+	                <form th:action="@{/admin/addCategory}" th:object="${category}" method="post">
+	                  <div class="form-group">
+						<input type="hidden" th:field="*{categoryId}" class="form-control" name="categoryId" id="categoryId" aria-describedby="categoryhelpId" placeholder="Mã thể loại ?" readonly="readonly">
+	                  </div>
+	                  <div class="form-group">
+	                    <label>Tên danh mục</label>
+						  <input type="text" th:field="*{categoryName}" class="form-control" id="categoryName" aria-describedby="namhelpId" placeholder="Tên thể loại ?">
+	                  </div>
+	                   <div class="form-footer">
+	                      <button class="btn btn-danger"><a th:href="@{/admin/categories}">Hủy</a></button>
+						  <button type="submit" class="btn btn-success">Cập nhật</button>
+	                   </div> 
+	               
+	                </form>
+	                 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="overlay toggle-menu"></div>
+      </div>
+    </div>
+<footer th:replace="~{/admin/footer/footer :: footer}"></footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/plugins/simplebar/js/simplebar.js"></script>
+<script src="/assets/js/sidebar-menu.js"></script>
+<script src="/assets/js/jquery.loading-indicator.js"></script>
+<script src="/assets/js/app-script.js"></script>
+<script src="/assets/plugins/Chart.js/Chart.min.js"></script>
+<script src="/assets/js/index.js"></script>
+<script src="/assets/plugins/summernote/dist/summernote-bs4.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Admin web nông sản</title>
+
+  <link href="/assets/css/pace.min.css" rel="stylesheet" />
+  <script src="/assets/js/pace.min.js"></script>
+  <link rel="stylesheet" href="/assets/plugins/summernote/dist/summernote-bs4.css"/>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+  <link href="/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+  <link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/animate.css" rel="stylesheet" type="text/css" />
+  <link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
+  <link href="/assets/css/sidebar-menu.css" rel="stylesheet" />
+  <link href="/assets/css/app-style.css" rel="stylesheet" />
+
+
+</head>
+<body>
+<header th:replace="~{/admin/header/header :: header}"></header>
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <!--End Row-->
+
+
+        <div class="row">
+          <div class="col-lg-12">
+            <button class="add-catalog"><a th:href="@{/admin/addNew}">Thêm tin tức</a></button>
+          </div>
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Danh sách tin tức</h5>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Tiêu đề</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Người đăng</th>
+                        <th scope="col">Ngày đăng</th>
+                         <th scope="col">Hành động</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="boardnew:${boardnewList}">
+                        <td scope="row">[[${boardnew.id}]]</td>
+                        <td>[[${boardnew.title}]]</td>
+        				<td><img style="width: 110px;height: 67px; object-fit: cover;border: 1px solid #fff;" th:src="@{'/loadImage?imageName='+${boardnew.image_link}}"></td>
+        				<td>[[${boardnew.author}]]</td>
+        				<td>[[${boardnew.created}]]</td>
+        				 <td>
+                         <button th:data-id="${boardnew.id}" th:data-name="${boardnew.title}"
+                                 onclick="showConfigModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))" class="btn btn-danger">Xóa</a></button>
+                         
+                          <button class="btn btn-success"><a th:href="@{/admin/editNew/{id}(id=${boardnew.id})}">Sửa</a></button>
+                        </td>
+                     </tr>
+                    </tbody>
+                  </table>
+                  <script>
+                    function showConfigModalDialog(id, name) {
+                      $('#name').text(name);
+                      $('#yesOption').attr('href', '/admin/deleteNew/'+id);
+                      $('#configmationId').modal('show');
+                    }
+                  </script>
+
+                  <!-- Modal -->
+                  <div class="modal" tabindex="-1" role="dialog" id="configmationId">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" style="color: black">Xác nhận</h5>
+                          <button type="button" class="close" data-dismiss="modal"
+                                  aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p style="color: black">Bạn muốn xóa bài viết này không?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <a id="yesOption" type="button" class="btn btn-primary">Có</a>
+                          <button type="button" class="btn btn-danger"
+                                  data-dismiss="modal">Không</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<footer th:replace="~{/admin/footer/footer :: footer}"></footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/plugins/simplebar/js/simplebar.js"></script>
+<script src="/assets/js/sidebar-menu.js"></script>
+<script src="/assets/js/jquery.loading-indicator.js"></script>
+<script src="/assets/js/app-script.js"></script>
+<script src="/assets/plugins/Chart.js/Chart.min.js"></script>
+<script src="/assets/js/index.js"></script>
+<script src="/assets/plugins/summernote/dist/summernote-bs4.min.js"></script>
+</body>
+
+</html>

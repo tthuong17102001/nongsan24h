@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Admin web nông sản</title>
+
+  <link href="/assets/css/pace.min.css" rel="stylesheet" />
+  <script src="/assets/js/pace.min.js"></script>
+  <link rel="stylesheet" href="/assets/plugins/summernote/dist/summernote-bs4.css"/>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+  <link href="/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+  <link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/animate.css" rel="stylesheet" type="text/css" />
+  <link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
+  <link href="/assets/css/sidebar-menu.css" rel="stylesheet" />
+  <link href="/assets/css/app-style.css" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="~{/admin/header/header :: header}"></header>
+
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="card mt-3">
+      <div class="card-content">
+        <div class="row row-group m-0">
+          <div class="col-12 col-lg-6 col-xl-3 border-light">
+            <div class="card-body">
+              <h5 class="text-white mb-0">[[${countOrder[0]}]] <span class="float-right"><i class="fa fa-shopping-cart"></i></span>
+              </h5>
+              <div class="progress my-3" style="height:3px;">
+                <div class="progress-bar" style="width:55%"></div>
+              </div>
+              <p class="mb-0 text-white small-font">Đơn hàng (theo tuần)<span class="float-right"></span></p>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 col-xl-3 border-light">
+            <div class="card-body">
+              <h5 class="text-white mb-0">[[${repoMoneyWeek[0]}]] <span class="float-right">VNĐ</span></h5>
+              <div class="progress my-3" style="height:3px;">
+                <div class="progress-bar" style="width:55%"></div>
+              </div>
+              <p class="mb-0 text-white small-font">Lợi nhuận (theo tuần)<span class="float-right"></span></p>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 col-xl-3 border-light">
+            <div class="card-body">
+              <h5 class="text-white mb-0">[[${repoUser[0]}]] <span class="float-right"><i class="fa fa-eye"></i></span></h5>
+              <div class="progress my-3" style="height:3px;">
+                <div class="progress-bar" style="width:55%"></div>
+              </div>
+              <p class="mb-0 text-white small-font">Khách hàng mới (theo tuần)<span class="float-right"></span></p>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 col-xl-3 border-light">
+            <div class="card-body">
+              <h5 class="text-white mb-0" th:utext="${repoCountWeek[0]}"> <span class="float-right"><i class="fa fa-envira"></i></span></h5>
+              <div class="progress my-3" style="height:3px;">
+                <div class="progress-bar" style="width:55%"></div>
+              </div>
+              <p class="mb-0 text-white small-font">Sản phẩm mới (theo tuần)<span class="float-right"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-lg-4 col-xl-4">
+        <div class="card">
+          <div class="card-header">Danh mục bán chạy
+          </div>
+          <div class="card-body">
+            <div class="chart-container-2">
+              <canvas id="chart2"></canvas>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center">
+              <tbody>
+              <tr th:each="item:${repoCategory}">
+                <td><i class="fa fa-circle text-white mr-2"></i>[[${item[0]}]]</td>
+                <td>[[${item[1]}]] VNĐ</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="~{/admin/footer/footer :: footer}"></footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/plugins/simplebar/js/simplebar.js"></script>
+<script src="/assets/js/sidebar-menu.js"></script>
+<script src="/assets/js/jquery.loading-indicator.js"></script>
+<script src="/assets/js/app-script.js"></script>
+<script src="/assets/plugins/Chart.js/Chart.min.js"></script>
+<script src="/assets/js/index.js"></script>
+<script src="/assets/plugins/summernote/dist/summernote-bs4.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+</head>
+<body>
+<th:block th:fragment= "menu">
+    <section id="menu">
+    <div class="container">
+      <div class="menu-area">
+        <!-- Navbar -->
+        <div class="navbar navbar-default" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>          
+          </div>
+          <div class="navbar-collapse collapse">
+            <!-- Left nav -->
+            <ul class="nav navbar-nav">
+              <li><a href="/">TRANG CHỦ</a></li>
+              <li><a th:href="@{/aboutUs}">GIỚI THIỆU</a></li>
+            <li><a th:href="@{/products}">SẢN PHẨM</span></a>
+                <ul class="dropdown-menu">
+                    <li th:each="item : ${categoryList}">
+                        <a th:href="@{/productByCategory(id=${item.categoryId})}">[[${item.categoryName}]]</a>
+                    </li>
+                </ul>
+              </li>
+              <li><a th:href="@{/news-list}">TIN TỨC</a></li>
+              <li><a th:href="@{/security}">CHÍNH SÁCH</a></li>
+              <li><a th:href="@{/contact}">LIÊN HỆ</a></li>
+              <li class="aa-search"><!-- search box -->
+              <a class="aa-search-box">
+                  <form th:action="@{/searchProduct}" class="header-form">
+                      <input type="text" name="keyword" th:value="${keyword}" placeholder="Tìm kiếm..." autocomplete="off" />
+                      <button class="serach-box"><span class="fa fa-search"></span></button>
+                  </form>
+              </a>
+              <!-- / search box -->
+             </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+          
+        </div>
+      </div>       
+    </div>
+  </section>
+</th:block>
+</body>
+</html>

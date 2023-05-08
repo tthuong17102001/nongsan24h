@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Admin web nông sản</title>
+
+    <link href="/assets/css/pace.min.css" rel="stylesheet" />
+    <script src="/assets/js/pace.min.js"></script>
+    <link rel="stylesheet" href="/assets/plugins/summernote/dist/summernote-bs4.css"/>
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link href="/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/sidebar-menu.css" rel="stylesheet" />
+    <link href="/assets/css/app-style.css" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="~{/admin/header/header :: header}"></header>
+
+<div class="content-wrapper">
+      <div class="container-fluid">
+        <!--End Row-->
+
+
+        <div class="row">
+ 
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Danh sách đơn hàng</h5>
+                  <a th:href="@{/admin/export}" style="padding-left: 20px;">
+                      <h4 class="card-title" style="text-decoration: underline; color: green;">Xuất file Excel</h4>
+                  </a>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Tên khách hàng</th>
+                        <th>Số ĐT</th>
+                        <th>Ngày đặt hàng</th>
+                        <th>Địa chỉ</th>
+                        <th>Tổng tiền</th>
+                        <th>Chi tiết đơn hàng</th>
+                        <th style="width: 10%">Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${orderDetails}">
+                        <td>[[${item.orderId}]]</td>
+                        <td>[[${item.user.name}]]</td>
+                        <td>[[${item.phone}]]</td>
+                        <td>[[${item.orderDate}]]</td>
+                        <td>[[${item.address}]]</td>
+                        <td th:text="${#numbers.formatDecimal(item.amount, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ'"></td>
+                        <td>
+                            <a th:href="@{'/admin/order/detail/'+${item.orderId}}">
+                                <i class="fa fa-info-circle"> Chi tiết đơn hàng</i>
+                            </a>
+                        </td>
+
+                        <td class="text-center">
+                            <div th:if="${item.status==0}">
+                                <a style="cursor: pointer; color: #0e76a8;" th:data-id="${item.orderId}"
+                                   onclick="showConfigConfirmModalDialog(this.getAttribute('data-id'))">
+                                    <i class="fa fa-check-circle"> Xác nhận</i>
+                                </a>
+                                <hr>
+                                <a style="cursor: pointer;" th:data-id="${item.orderId}"
+                                   onclick="showConfigCancelModalDialog(this.getAttribute('data-id'))">
+                                    <i class="fas fa-trash-alt text-danger"> Hủy đơn</i>
+                                </a>
+                            </div>
+
+                            <div th:if="${item.status==1}">
+                                <a style="cursor: pointer; color: #ffab10;" th:data-id="${item.orderId}"
+                                   onclick="showConfigDeliveredModalDialog(this.getAttribute('data-id'))">
+                                    <i class="fa fa-check-circle"> Xác nhận đã giao</i>
+                                </a>
+                            </div>
+
+                            <div th:if="${item.status==2}" style="cursor: pointer; color: #119744;">
+                                <i class="fa fa-check-circle"> Đã thanh toán</i>
+                            </div>
+
+                            <div th:if="${item.status==3}" style="cursor: pointer; color: #ff3838;">
+                                <i>Đã huỷ</i>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                    <!-- Xác nhận đơn -->
+                    <script>
+                        function showConfigConfirmModalDialog(id) {
+                            $('#idConfirm').text(id);
+                            $('#yesOptionConfirm').attr('href', '/admin/order/confirm/' + id);
+                            $('#configmationConfirmId').modal('show');
+                        }
+                    </script>
+
+                    <!-- Modal -->
+                    <div class="modal" id="configmationConfirmId" style="color:#000;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="color:#000;">Xác nhận</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Bạn có muốn xác nhận đơn hàng có mã "<span id="idConfirm"></span>" ?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a id="yesOptionConfirm" type="button" class="btn btn-info">Có</a>
+                                    <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Không</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Huỷ đơn hàng -->
+                    <script>
+                        function showConfigCancelModalDialog(id) {
+                            $('#idCancel').text(id);
+                            $('#yesOptionCanCel').attr('href', '/admin/order/cancel/' + id);
+                            $('#configmationCancelId').modal('show');
+                        }
+                    </script>
+
+                    <!-- Modal -->
+                    <div class="modal" id="configmationCancelId" style="color:#000;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="color:#000;">Xác nhận</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Bạn có muốn huỷ đơn hàng có mã "<span id="idCancel"></span>" ?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a id="yesOptionCanCel" type="button" class="btn btn-info">Có</a>
+                                    <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Không</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Xác nhận đã giao -->
+                    <script>
+                        function showConfigDeliveredModalDialog(id) {
+                            $('#idDelivered').text(id);
+                            $('#yesOptionDelivered').attr('href', '/admin/order/delivered/' + id);
+                            $('#configmationDeliveredId').modal('show');
+                        }
+                    </script>
+
+                    <!-- Modal -->
+                    <div class="modal" id="configmationDeliveredId" style="color:#000;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="color:#000;">Xác nhận</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Bạn có muốn xác nhận đơn hàng có mã "<span id="idDelivered"></span>" ?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a id="yesOptionDelivered" type="button" class="btn btn-info">Có</a>
+                                    <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Không</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<footer th:replace="~{/admin/footer/footer :: footer}"></footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/plugins/simplebar/js/simplebar.js"></script>
+<script src="/assets/js/sidebar-menu.js"></script>
+<script src="/assets/js/jquery.loading-indicator.js"></script>
+<script src="/assets/js/app-script.js"></script>
+<script src="/assets/plugins/Chart.js/Chart.min.js"></script>
+<script src="/assets/js/index.js"></script>
+<script src="/assets/plugins/summernote/dist/summernote-bs4.min.js"></script>
+</body>
+
+</html>
