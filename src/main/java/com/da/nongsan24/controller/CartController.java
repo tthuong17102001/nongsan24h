@@ -12,6 +12,7 @@ import com.da.nongsan24.util.Utils;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -23,13 +24,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.util.StringUtils;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
 
 @Controller
 public class CartController extends CommomController {
@@ -78,12 +79,7 @@ public class CartController extends CommomController {
 		session = request.getSession();
 		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
 		if (product != null) {
-			CartItem item = new CartItem();
-			BeanUtils.copyProperties(product, item);
-			item.setQuantity(1);
-			item.setProduct(product);
-			item.setId(productId);
-			shoppingCartService.add(item);
+			shoppingCartService.add(product,1);
 		}
 		session.setAttribute("cartItems", cartItems);
 		model.addAttribute("totalCartItems", shoppingCartService.getCount());
@@ -91,24 +87,44 @@ public class CartController extends CommomController {
 		return "redirect:/products";
 	}
 
+	@PostMapping(value = "/cart-update")
+	public String shoppingCartUpdateQty(HttpServletRequest request, Model model, @RequestParam Map<String, String> requestParams) {
+		session = request.getSession();
+		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
+
+		for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+			String paramName = entry.getKey();
+			String paramValue = entry.getValue();
+
+			if (paramName.startsWith("quantity_")) {
+				int index = Integer.parseInt(paramName.substring(paramName.lastIndexOf("_") + 1));
+				Long id = Long.parseLong(requestParams.get("id_" + index));
+				int quantity = Integer.parseInt(paramValue);
+
+				shoppingCartService.updateProduct(id, quantity);
+			}
+		}
+
+		session.setAttribute("cartItems", cartItems);
+		model.addAttribute("totalCartItems", shoppingCartService.getCount());
+
+		return "redirect:/cart";
+	}
+
 	// delete cartItem
 	@SuppressWarnings("unlikely-arg-type")
-	@GetMapping(value = "/remove/{id}")
-	public String remove(@PathVariable("id") Long id, HttpServletRequest request, Model model) {
+	@GetMapping(value = "/remove")
+	public String remove(@RequestParam("id") Long id, HttpServletRequest request, Model model) {
 		Product product = productRepository.findById(id).orElse(null);
 
 		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
 		session = request.getSession();
 		if (product != null) {
-			CartItem item = new CartItem();
-			BeanUtils.copyProperties(product, item);
-			item.setProduct(product);
-			item.setId(id);
 			cartItems.remove(session);
-			shoppingCartService.remove(item);
+			shoppingCartService.remove(product);
 		}
 		model.addAttribute("totalCartItems", shoppingCartService.getCount());
-		return "redirect:/checkout";
+		return "redirect:/cart";
 	}
 
 	// show check out
@@ -135,7 +151,7 @@ public class CartController extends CommomController {
 		return "web/checkout";
 	}
 
-	// submit checkout
+
 	@PostMapping(value = "/checkout")
 	@Transactional
 	public String checkedOut(Model model, Order order, HttpServletRequest request, User user)
@@ -151,7 +167,7 @@ public class CartController extends CommomController {
 			totalPrice += price - (price * cartItem.getProduct().getDiscount() / 100);
 		}
 
-		BeanUtils.copyProperties(order, orderFinal);
+		BeanUtils.copyProperties(order, orderFinal); //chuyển tt từ order -> orderFinal
 		if (StringUtils.equals(checkOut, "paypal")) {
 
 			String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
@@ -175,7 +191,6 @@ public class CartController extends CommomController {
 		Date date = new Date();
 		order.setOrderDate(date);
 		order.setStatus(0);
-		order.getOrderId();
 		order.setAmount(totalPrice);
 		order.setUser(user);
 
@@ -189,10 +204,18 @@ public class CartController extends CommomController {
 			double unitPrice = cartItem.getProduct().getPrice();
 			orderDetail.setPrice(unitPrice);
 			orderDetailRepository.save(orderDetail);
+
+			// Giảm số lượng sản phẩm sau khi đặt hàng thành công
+			Product product = cartItem.getProduct();
+			int orderedQuantity = cartItem.getQuantity();
+			int currentQuantity = product.getQuantity();
+			int updatedQuantity = currentQuantity - orderedQuantity;
+			product.setQuantity(updatedQuantity);
+			productRepository.save(product);
 		}
 
-		// sendMail
-		commomDataService.sendSimpleEmail(user.getEmail(), "MonaFresh Xác Nhận Đơn hàng", "aaaa", cartItems,
+		// ...Các phần mã khác...
+		commomDataService.sendSimpleEmail(user.getEmail(), "Nongsan24h Xác Nhận Đơn hàng", "aaaa", cartItems,
 				totalPrice, order);
 
 		shoppingCartService.clear();
@@ -204,7 +227,7 @@ public class CartController extends CommomController {
 
 	// paypal
 	@GetMapping(URL_PAYPAL_SUCCESS)
-	public String successPay(@RequestParam("" + "" + "") String paymentId, @RequestParam("PayerID") String payerId,
+	public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId,
 							 HttpServletRequest request, User user, Model model) throws MessagingException {
 		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
 		model.addAttribute("cartItems", cartItems);
@@ -239,10 +262,16 @@ public class CartController extends CommomController {
 					double unitPrice = cartItem.getProduct().getPrice();
 					orderDetail.setPrice(unitPrice);
 					orderDetailRepository.save(orderDetail);
+
+					// Giảm số lượng sản phẩm trong cơ sở dữ liệu
+					Product product = cartItem.getProduct();
+					int quantity = cartItem.getQuantity();
+					product.setQuantity(product.getQuantity() - quantity);
+					productRepository.save(product);
 				}
 
 				// sendMail
-				commomDataService.sendSimpleEmail(user.getEmail(), "MonaFresh Xác Nhận Đơn hàng", "aaaa", cartItems,
+				commomDataService.sendSimpleEmail(user.getEmail(), "Nongsan24h Xác Nhận Đơn hàng", "aaaa", cartItems,
 						totalPrice, orderFinal);
 
 				shoppingCartService.clear();
@@ -256,6 +285,7 @@ public class CartController extends CommomController {
 		}
 		return "redirect:/";
 	}
+
 
 	// done checkout ship cod
 	@GetMapping(value = "/checkout_success")

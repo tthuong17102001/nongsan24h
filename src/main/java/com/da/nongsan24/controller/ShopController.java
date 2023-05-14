@@ -97,7 +97,8 @@ public class ShopController extends CommomController {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
-
+		List<Product> productList = productRepository.listProductNew20();
+		model.addAttribute("productList", productList);
 		commomDataService.commomData(model, user);
 		model.addAttribute("products", productPage);
 		return "web/shop";
@@ -148,7 +149,8 @@ public class ShopController extends CommomController {
 			listProductNew.add(productEntity);
 
 		}
-
+		List<Product> productList = productRepository.listProductNew20();
+		model.addAttribute("productList", productList);
 		model.addAttribute("products", listProductNew);
 		commomDataService.commomData(model, user);
 		return "web/shop";

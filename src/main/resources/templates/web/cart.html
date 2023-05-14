@@ -89,14 +89,15 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:each="item:${cartItems}">
-                        <td><a class="remove" th:data-id="${item.product.productId}" th:data-name="${item.product.productName}" onclick="showConfigModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"><fa class="fa fa-close"></fa></a></td>
+                      <tr th:each="item,varStatus:${cartItems}">
+                        <input class="aa-cart-quantity" type="hidden" th:name="'id_' + *{varStatus.index}" th:value="${item.product.productId}" min=0>
+                        <td><a class="remove" th:href="@{|/remove?id=${item.product.productId}|}"><fa class="fa fa-close"></fa></a></td>
                         <td><a th:href="@{/productDetail(id=${item.product.productId})}"><img th:src="@{'/loadImage?imageName='+${item.product.productImage}}" alt="img${item.product.name }"></a></td>
                         <td><a class="aa-cart-title" th:href="@{/productDetail(id=${item.product.productId})}">[[${item.product.productName}]]</a></td>
                         <td>[[${#numbers.formatDecimal(item.product.price, 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</td>
-                        <td><input class="aa-cart-quantity" type="number" th:name="${item.product.productId}" th:value="${item.quantity}" min=1></td>
+                        <td><input class="aa-cart-quantity" type="number" th:name="'quantity_' + *{varStatus.index}" th:value="${item.quantity}" min=0 th:attr="max=${item.product.quantity}"></td>
                         <td>[[${item.product.discount}]] %</td>
-                        <td>[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</td>
+                        <td>[[${#numbers.formatDecimal((item.product.price - (item.product.price * item.product.discount/100))*item.quantity, 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</td>
                       </tr>
           			 <tr>
                         <td colspan="6" class=""><strong>TỔNG TIỀN</strong></td>
@@ -187,7 +188,7 @@
   (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
-    s1.src='https://embed.tawk.to/5eedbd889e5f69442290f4d1/default';
+    s1.src='https://embed.tawk.to/645c4b826a9aad4bc57a0e0d/1h048duf0';
     s1.charset='UTF-8';
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);

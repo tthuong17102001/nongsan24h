@@ -2483,6 +2483,111 @@ a.aa-product-img img {
   float: none;
 }
 
+/**/
+#user-view {
+  display: inline;
+  float: left;
+  width: 100%;
+}
+#user-view .cart-view-area {
+  display: inline;
+  float: left;
+  padding-top: 50px;
+  width: 100%;
+}
+#user-view .cart-view-area .cart-view-table {
+  background-color: #F5F5F5;
+  display: inline;
+  float: left;
+  width: 100%;
+  padding: 30px;
+}
+#user-view .cart-view-area .cart-view-table .table {
+  border: 1px solid #ddd;
+}
+#user-view .cart-view-area .cart-view-table .table thead tr th {
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  color: #555;
+  font-size: 18px;
+  padding: 20px 0;
+  text-align: center;
+}
+#user-view .cart-view-area .cart-view-table .table tbody tr td {
+  vertical-align: middle;
+  border-right: 1px solid #ccc;
+  text-align: center;
+}
+#user-view .cart-view-area .cart-view-table .table tbody tr td .remove {
+  color: #ff0000;
+  padding: 5px;
+}
+#user-view .cart-view-area .cart-view-table .table tbody tr td .remove:hover {
+  color: #555;
+}
+#user-view .cart-view-area .cart-view-table .table tbody tr td img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+}
+#user-view .cart-view-area .cart-view-table .table tbody tr td .aa-cart-quantity {
+  padding: 5px;
+  width: 50px;
+}
+#user-view .cart-view-area .cart-view-table .table tbody tr .aa-cart-view-bottom {
+  padding: 50px;
+}
+#user-view .cart-view-area .cart-view-table .table tbody tr .aa-cart-view-bottom .aa-cart-coupon {
+  float: left;
+}
+#user-view .cart-view-area .cart-view-table .table tbody tr .aa-cart-view-bottom .aa-cart-coupon .aa-coupon-code {
+  border: 1px solid #e5e5e5;
+  color: #505050;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 25px;
+  margin-right: 20px;
+  min-width: 250px;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+#user-view .cart-view-area .cart-view-table .cart-view-total {
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+#user-view .cart-view-area .cart-view-table .cart-view-total h4 {
+  color: #555;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 15px;
+}
+#user-view .cart-view-area .cart-view-table .cart-view-total .aa-totals-table {
+  border: 1px solid #ccc;
+  width: 100%;
+}
+#user-view .cart-view-area .cart-view-table .cart-view-total .aa-totals-table tr th {
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+#user-view .cart-view-area .cart-view-table .cart-view-total .aa-totals-table tr td {
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  padding: 10px;
+}
+#user-view .cart-view-area .cart-view-table .cart-view-total a {
+  margin-top: 30px;
+  display: inline-block;
+  float: none;
+}
+
 /*==================
  CHECKOUT PAGE
 ====================*/

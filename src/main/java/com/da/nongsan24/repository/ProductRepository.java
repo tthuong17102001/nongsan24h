@@ -37,6 +37,15 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             + "GROUP BY p.product_id\r\n"
             + "ORDER by SoLuong DESC limit 20;", nativeQuery = true)
     public List<Object[]> bestSaleProduct20();
+//san pham noi bat
+    @Query(value = "SELECT p.product_id, COUNT(*) AS SoLuongDanhGia " +
+            "FROM order_details o " +
+            "JOIN products p ON o.product_id = p.product_id " +
+            "JOIN review r ON r.product_id = p.product_id " +
+            "GROUP BY p.product_id " +
+            "ORDER BY SoLuongDanhGia DESC " +
+            "LIMIT 20;", nativeQuery = true)
+    public List<Object[]> bestRatedProducts20();
     // Hàng còn
     @Query(value = "select * from products o where product_id in :ids", nativeQuery = true)
     List<Product> findByInventoryIds(@Param("ids") List<Integer> listProductId);

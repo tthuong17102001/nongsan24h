@@ -11,10 +11,12 @@ public interface ShoppingCartService {
     int getCount();
     double getAmount();
     void clear();
-    void remove(Product product);
     Collection<CartItem> getCartItems();
+    void updateProduct(Long id, int quantity);
 
-    void remove(CartItem item);
 
-    void add(CartItem item);
+    void remove(Product product);
+
+    void add(Product product, int quantity);
+    void updateQuantity(Collection<CartItem> cartForm);
 }

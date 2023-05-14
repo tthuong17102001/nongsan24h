@@ -340,7 +340,7 @@
                             <div class="tab-pane fade in" id="sanphamnoibat">
                                 <ul class="aa-product-catg aa-popular-slider">
                                     <!-- start single product item -->
-                                    <li th:each="product : ${bestSaleProduct20}">
+                                    <li th:each="product : ${bestRatedProduct20}">
                                         <figure>
                                             <a class="aa-product-img" th:href="@{/productDetail(id=${product.productId})}"><img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="polo shirt img"></a>
                                             <th:block th:if="${user.email != null}">
@@ -505,15 +505,15 @@
                         <div class="col-md-4 col-sm-4" th:each="boardnew, iterationStat:${boardnewlist}" th:if="${iterationStat.count} &lt;= 3">
                             <div class="aa-latest-blog-single">
                                 <figure class="aa-blog-img">
-                                    <a th:href="@{/news-list-detail?id=${boardnew.id}}"><img th:src="@{'/loadImage?imageName='+${boardnew.image_link}}" alt=""></a>
+                                    <a th:href="@{/new-list-detail(id=${boardnew.id})}"><img th:src="@{'/loadImage?imageName='+${boardnew.image_link}}" alt=""></a>
                                     <figcaption class="aa-blog-img-caption">
                                         <span href="#"><i class="fa fa-clock-o"></i>[[${boardnew.created}]]</span>
                                     </figcaption>
                                 </figure>
                                 <div class="aa-blog-info">
-                                    <h3 class="aa-blog-title"><a th:href="@{/new-list-detail?id=${boardnew.id}}">[[${boardnew.title}]]</a></h3>
+                                    <h3 class="aa-blog-title"><a th:href="@{/new-list-detail(id=${boardnew.id})}">[[${boardnew.title}]]</a></h3>
                                     <p class="desc-boardnews">[[${boardnew.content}]]</p>
-                                    <a th:href="@{/new-list-detail?id=${boardnew.id}}" class="aa-read-mor-btn">Xem thêm<span class="fa fa-long-arrow-right"></span></a>
+                                    <a th:href="@{/new-list-detail(id=${boardnew.id})}" class="aa-read-mor-btn">Xem thêm<span class="fa fa-long-arrow-right"></span></a>
                                 </div>
                             </div>
                         </div>
@@ -535,17 +535,29 @@
 <!-- jQuery library -->
 
 <!--Start of Tawk.to Script-->
+
 <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
         var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
         s1.async=true;
-        s1.src='https://embed.tawk.to/5eedbd889e5f69442290f4d1/default';
+        s1.src='https://embed.tawk.to/645c4b826a9aad4bc57a0e0d/1h048duf0';
         s1.charset='UTF-8';
         s1.setAttribute('crossorigin','*');
         s0.parentNode.insertBefore(s1,s0);
     })();
 </script>
+<!--<script type="text/javascript">-->
+<!--    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();-->
+<!--    (function(){-->
+<!--        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];-->
+<!--        s1.async=true;-->
+<!--        s1.src='https://embed.tawk.to/5eedbd889e5f69442290f4d1/default';-->
+<!--        s1.charset='UTF-8';-->
+<!--        s1.setAttribute('crossorigin','*');-->
+<!--        s0.parentNode.insertBefore(s1,s0);-->
+<!--    })();-->
+<!--</script>-->
 <!--End of Tawk.to Script-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->

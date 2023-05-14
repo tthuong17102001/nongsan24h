@@ -31,7 +31,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
             }
         }
         if (hasRoleUser) {
-            redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/cart");
+            redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/");
         } else if (hasAdmin) {
             redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/admin/home");
         } else {

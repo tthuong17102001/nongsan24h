@@ -48,87 +48,80 @@
 <!-- Start header section -->
 <header th:replace="~{/web/header/mainHeader :: mainHeader}"></header>
 <!-- / header section -->
-
-
-<!--  content -->
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
-    <img src="/images/banner-product.png" alt="banner sản phẩm">
+    <img src="/images/archive-banner.png" alt="banner blog">
     <div class="aa-catg-head-banner-area">
         <div class="container">
             <div class="aa-catg-head-banner-content">
-                <h2>Sản phẩm</h2>
+                <h2>Chi tiết đơn hàng</h2>
                 <ol class="breadcrumb">
                     <li><a href="/">Trang chủ</a></li>
-                    <li style="color:#fff">Danh sách yêu thích</li>
+                    <li style="color:#fff">Chi tiết đơn hàng</li>
                 </ol>
             </div>
         </div>
     </div>
 </section>
-<section id="cart-view">
+<!-- / catg header banner section -->
+<section class="inner-section profile-part">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div th:unless="${totalSave!=0}" class="text-center" style="margin: 120px 0px">
-                    <h3 style="color: #754110" class="mt-5">Hiện tại bạn chưa có sản phẩm yêu thích nào!</h3>
-                    <h4 style="color: #754110">Hãy mua sắm đi nào!</h4>
-                    <a th:href="@{/products}" style="text-decoration: underline;">Click tại đây!</a>
-                </div>
-                <div th:if="${totalSave!=0}">
-                <div class="cart-view-area">
-                    <div class="cart-view-table">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Sản phẩm</th>
-                                        <th scope="col">Tên</th>
-                                        <th scope="col">Đơn giá</th>
-                                        <th scope="col">Trạng thái</th>
-                                        <th scope="col">Thêm giỏ hàng</th>
-                                        <th scope="col">Hành động</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="item,iState : ${favorites}">
-                                        <td>[[${iState.index + 1}]]</td>
-                                        <td>
-                                            <img th:src="@{'/loadImage?imageName='+${item.product.productImage}}" alt="product" />
-                                        </td>
-                                        <td>[[${item.product.productName}]]</td>
-                                        <td>
-                                            [[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small>
-                                        </td>
-                                        <td style="color: #754110">[[${item.product.quantity>0}?'Sản phẩm đang còn' : 'Đã hết hàng']] </td>
-                                        <td class="table-shop">
-                                            <a class="product-add" title="Thêm giỏ hàng" th:href="@{/addToCart(productId=${item.product.productId})}">
-                                                Thêm giỏ hàng
-                                            </a>
+            <div class="col-lg-12">
+                <div class="account-card mb-0">
+                    <section id="cart-view">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="cart-view-area">
+                                        <div class="cart-view-table">
+                                            <div class="table-responsive">
+                                                <h3 style="color: #754110;margin-bottom: 15px; margin-top: 0px">Chi tiết đơn hàng</h3>
+                                                <a style="border-radius: 6px;margin-bottom: 20px;background: #75410F;display: inline-block;padding: 10px 15px;color: #fff;" th:href="@{/profile}">
+                                                    Quay lại
+                                                </a>
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">sản phẩm</th>
+                                                        <th scope="col">Tên sản phẩm</th>
+                                                        <th scope="col">Đơn giá</th>
+                                                        <th scope="col">Số lượng</th>
+                                                        <th scope="col">Tổng tiền</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="item,iState : ${orderDetail}">
+                                                        <td class="table-serial">[[${iState.index + 1}]]</td>
+                                                        <td class="table-image">
+                                                            <img th:src="@{'/loadImage?imageName='+${item.product.productImage}}" alt="product" />
+                                                        </td>
+                                                        <td class="table-name">[[${item.product.productName}]]</td>
+                                                        <td class="table-price">[[${#numbers.formatDecimal(item.price - (item.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</td>
+                                                        <td class="table-address">[[${item.quantity}]]</td>
+                                                        <td class="table-brand">[[${#numbers.formatDecimal((item.price - (item.price * item.product.discount/100)) * item.quantity, 1, 'DEFAULT', 0, 'DEFAULT')}+ ' đ']]</td>
+                                                    </tr>
 
-                                        </td>
-                                        <td class="table-action">
-                                            <a style="margin-right: 16px" class="view" th:href="@{/productDetail(id=${item.product.productId})}" title="Chi tiết sản phẩm">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-
-                                            <a class="trash" th:href="@{/doUnFavorite(id=${item.product.productId})}" title="Xóa yêu thích">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Cart Total view -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                    </div>
-                </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+
+
+<!--  footer-->
 <footer th:replace="~{/web/footer/footer :: footer}"></footer>
 <!-- end footer-->
 <!-- jQuery library -->

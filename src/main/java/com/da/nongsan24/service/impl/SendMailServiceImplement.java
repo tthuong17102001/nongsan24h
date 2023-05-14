@@ -46,13 +46,13 @@ public class SendMailServiceImplement implements SendMailService {
 
     @Override
     public void send(MailInfo mail) throws MessagingException, IOException {
-        MimeMessage message = sender.createMimeMessage();
+        MimeMessage message = sender.createMimeMessage(); //doi tuong sender de gui thu dien tu
         MimeMessageHelper helper = new MimeMessageHelper(message,true,"utf-8");
-        helper.setFrom(mail.getFrom());
-        helper.setTo(mail.getTo());
-        helper.setSubject(mail.getSubject());
-        helper.setText(mail.getBody(), true);
-        helper.setReplyTo(mail.getFrom());
+        helper.setFrom(mail.getFrom()); // thiet lap nguoi gui
+        helper.setTo(mail.getTo()); // nguoi nhan
+        helper.setSubject(mail.getSubject()); // tieu de
+        helper.setText(mail.getBody(), true); // noi dung
+        helper.setReplyTo(mail.getFrom()); //dia chi email tra loi
         if(mail.getAttachments() != null){
             FileSystemResource file = new FileSystemResource(new File(mail.getAttachments()));
             helper.addAttachment(mail.getAttachments(), file);

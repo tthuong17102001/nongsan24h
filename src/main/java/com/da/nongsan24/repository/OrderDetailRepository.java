@@ -1,8 +1,12 @@
 package com.da.nongsan24.repository;
 
+import com.da.nongsan24.entities.Order;
 import com.da.nongsan24.entities.OrderDetail;
+import com.da.nongsan24.entities.Product;
+import com.da.nongsan24.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
